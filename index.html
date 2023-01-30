@@ -1,0 +1,65 @@
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no" />
+    <title>USA Drought & Major Cities Locations</title>
+
+    <link rel="stylesheet" href="https://js.arcgis.com/4.25/esri/themes/light/main.css" />
+    <script src="https://js.arcgis.com/4.25/"></script>
+
+    <style>
+      html,
+      body,
+      #viewDiv {
+        padding: 0;
+        margin: 0;
+        height: 100%;
+        width: 100%;
+      }
+    </style>
+
+    <script>
+      require(["esri/Map", "esri/views/MapView", "esri/layers/FeatureLayer"], (Map, MapView, FeatureLayer) => {
+        const map = new Map({
+          basemap: "terrain"
+        });
+
+        const view = new MapView({
+          container: "viewDiv",
+          map: map,
+
+          extent: {
+            // autocasts as new Extent()
+            xmin: -141.664837250328,
+            ymin: 6.43685105536415,
+            xmax: -86.3334381806722,
+            ymax: 78.0151429266359,
+            spatialReference: 4326
+          }
+        });
+
+        /********************
+         * Add feature layer
+         ********************/
+
+        // Carbon storage of trees in Warren Wilson College.
+        var droughtFL = new FeatureLayer({
+          url: "https://services9.arcgis.com/RHVPKKiFTONKtxq3/arcgis/rest/services/US_Drought_Intensity_v1/FeatureServer"
+        });
+        
+        map.add(droughtFL);
+        
+        var majorCitiesFL = new FeatureLayer({
+          url:
+     "https://services.arcgis.com/P3ePLMYs2RVChkJx/arcgis/rest/services/USA_Major_Cities_/FeatureServer"
+        });
+        
+        map.add(majorCitiesFL);
+      });
+    </script>
+  </head>
+
+  <body>
+    <div id="viewDiv"></div>
+  </body>
+</html>
